@@ -100,13 +100,16 @@ public class HomeActivity extends AppCompatActivity {
             bookListView.setVisibility(View.GONE);
         } else {
             emptyListMessage.setVisibility(View.GONE);
+            bookListView.setVisibility(View.VISIBLE);
+
             adapter = new BookAdapter(this, bookList);
             bookListView.setAdapter(adapter);
         }
 
         btnScanBook.setOnClickListener(v -> {
             ScanOptions options = new ScanOptions();
-            options.setPrompt("Arahkan kamera ke kode QR/Barcode");
+            options.setPrompt("Scan barcode buku");
+            options.setCameraId(0); // 0 = kamera belakang
             options.setBeepEnabled(true);
             options.setBarcodeImageEnabled(true);
             barcodeLauncher.launch(options);

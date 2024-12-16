@@ -143,20 +143,92 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    // Update buku berdasarkan ID
+    public boolean updateBook(int bookId, String title, String author, String genre, String barcode, String coverImage) {
+        SQLiteDatabase db = null;
+        try {
+            db = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(COL_BOOK_TITLE, title);
+            values.put(COL_BOOK_AUTHOR, author);
+            values.put(COL_BOOK_GENRE, genre);
+            values.put(COL_BOOK_BARCODE, barcode);
+            values.put(COL_BOOK_COVER_IMAGE, coverImage);
+            int result = db.update(TABLE_BOOKS, values, COL_BOOK_ID + " = ?", new String[]{String.valueOf(bookId)});
+            return result > 0;
+        } catch (Exception e) {
+            Log.e(TAG, "Error updating book: ", e);
+            return false;
+        } finally {
+            if (db != null) db.close();
+        }
+    }
+
+    // Hapus buku berdasarkan ID
+    public boolean deleteBookById(int bookId) {
+        SQLiteDatabase db = null;
+        try {
+            db = this.getWritableDatabase();
+            int result = db.delete(TABLE_BOOKS, COL_BOOK_ID + " = ?", new String[]{String.valueOf(bookId)});
+            return result > 0;
+        } catch (Exception e) {
+            Log.e(TAG, "Error deleting book: ", e);
+            return false;
+        } finally {
+            if (db != null) db.close();
+        }
+    }
+
     // Mengambil semua data buku dari tabel Books
     public Cursor getAllBooks() {
         SQLiteDatabase db = null;
-        Cursor cursor = null;
         try {
             db = this.getReadableDatabase();
-            String query = "SELECT " + COL_BOOK_ID + ", " + COL_BOOK_TITLE + " FROM " + TABLE_BOOKS;
-            cursor = db.rawQuery(query, null);
-            return cursor;
+            String query = "SELECT * FROM " + TABLE_BOOKS;
+            return db.rawQuery(query, null);
         } catch (Exception e) {
             Log.e(TAG, "Error retrieving books: ", e);
             return null;
         }
     }
+
+//    // Cek apakah buku sudah dipinjam
+//    public boolean isBookBorrowed(int bookId) {
+//        SQLiteDatabase db = null;
+//        Cursor cursor = null;
+//        try {
+//            db = this.getReadableDatabase();
+//            String query = "SELECT * FROM " + TABLE_BORROW + " WHERE " + COL_BORROW_BOOK_ID + " = ? AND " + COL_BORROW_RETURN_DATE + " IS NULL";
+//            cursor = db.rawQuery(query, new String[]{String.valueOf(bookId)});
+//            return cursor.getCount() > 0;  // Jika ada pinjaman yang belum dikembalikan
+//        } catch (Exception e) {
+//            Log.e(TAG, "Error checking if book is borrowed: ", e);
+//            return false;
+//        } finally {
+//            if (cursor != null) cursor.close();
+//            if (db != null) db.close();
+//        }
+//    }
+//
+//
+//    // Cek apakah buku sudah dipinjam
+//    public boolean isBookBorrowed(int bookId) {
+//        SQLiteDatabase db = null;
+//        Cursor cursor = null;
+//        try {
+//            db = this.getReadableDatabase();
+//            String query = "SELECT * FROM " + TABLE_BORROW + " WHERE " + COL_BORROW_BOOK_ID + " = ? AND " + COL_BORROW_RETURN_DATE + " IS NULL";
+//            cursor = db.rawQuery(query, new String[]{String.valueOf(bookId)});
+//            return cursor.getCount() > 0;  // Jika ada pinjaman yang belum dikembalikan
+//        } catch (Exception e) {
+//            Log.e(TAG, "Error checking if book is borrowed: ", e);
+//            return false;
+//        } finally {
+//            if (cursor != null) cursor.close();
+//            if (db != null) db.close();
+//        }
+//    }
+
 
     // Tambah data peminjaman ke tabel Borrow
     public boolean addBorrow(String username, int bookId, String borrowDate, String returnDate) {
@@ -172,6 +244,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return result != -1;
         } catch (Exception e) {
             Log.e(TAG, "Error adding borrow record: ", e);
+            return false;
+        } finally {
+            if (db != null) db.close();
+        }
+    }
+
+    // Pinjam buku
+    public boolean borrowBook(String username, int bookId, String borrowDate, String returnDate) {
+        SQLiteDatabase db = null;
+        try {
+            db = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(COL_BORROW_USERNAME, username);
+            values.put(COL_BORROW_BOOK_ID, bookId);
+            values.put(COL_BORROW_DATE, borrowDate);
+            values.put(COL_BORROW_RETURN_DATE, returnDate);
+            long result = db.insert(TABLE_BORROW, null, values);
+            return result != -1;
+        } catch (Exception e) {
+            Log.e(TAG, "Error borrowing book: ", e);
             return false;
         } finally {
             if (db != null) db.close();
@@ -206,4 +298,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    // Kembalikan buku
+    public boolean returnBook(int borrowId, String returnDate) {
+        SQLiteDatabase db = null;
+        try {
+            db = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(COL_BORROW_RETURN_DATE, returnDate);
+            int result = db.update(TABLE_BORROW, values, COL_BORROW_ID + " = ?", new String[]{String.valueOf(borrowId)});
+            return result > 0;
+        } catch (Exception e) {
+            Log.e(TAG, "Error returning book: ", e);
+            return false;
+        } finally {
+            if (db != null) db.close();
+        }
+    }
+
+    // Mengambil semua data pinjaman buku berdasarkan username
+    public Cursor getUserBorrowedBooks(String username) {
+        SQLiteDatabase db = null;
+        try {
+            db = this.getReadableDatabase();
+            String query = "SELECT * FROM " + TABLE_BORROW + " WHERE " + COL_BORROW_USERNAME + " = ?";
+            return db.rawQuery(query, new String[]{username});
+        } catch (Exception e) {
+            Log.e(TAG, "Error retrieving borrowed books for user: ", e);
+            return null;
+        }
+    }
+
+    // Mengambil data buku berdasarkan ID
+    public Cursor getBookById(int bookId) {
+        SQLiteDatabase db = null;
+        try {
+            db = this.getReadableDatabase();
+            String query = "SELECT * FROM " + TABLE_BOOKS + " WHERE " + COL_BOOK_ID + " = ?";
+            return db.rawQuery(query, new String[]{String.valueOf(bookId)});
+        } catch (Exception e) {
+            Log.e(TAG, "Error retrieving book by ID: ", e);
+            return null;
+        }
+    }
 }
+
