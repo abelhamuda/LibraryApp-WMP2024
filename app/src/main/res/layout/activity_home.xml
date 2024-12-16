@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Tombol untuk memindai QR/barcode -->
+    <Button
+        android:id="@+id/btnScanBook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Scan Book QR/Barcode"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Tombol untuk menambah buku (hanya untuk admin) -->
+    <Button
+        android:id="@+id/btnAddBook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Book"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Pesan jika daftar kosong -->
+    <TextView
+        android:id="@+id/emptyListMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Daftar buku kosong. Silakan tambahkan buku."
+        android:textSize="16sp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_marginBottom="16dp" />
+
+    <!-- ListView untuk menampilkan daftar buku -->
+    <ListView
+        android:id="@+id/bookListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>

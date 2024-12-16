@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Judul halaman -->
+    <TextView
+        android:id="@+id/tvBorrowTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Borrow a Book"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="16dp" />
+
+    <!-- Spinner untuk memilih buku -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select a Book:"
+        android:paddingBottom="8dp" />
+
+    <Spinner
+        android:id="@+id/spinnerBooks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"
+        android:background="@android:drawable/btn_dropdown"
+        android:padding="8dp" />
+
+    <!-- Input untuk tanggal kembali -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Return Date:"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp" />
+
+    <EditText
+        android:id="@+id/etReturnDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Select a return date"
+        android:focusable="false"
+        android:inputType="none"
+        android:drawableEnd="@android:drawable/ic_menu_my_calendar"
+        android:padding="8dp"
+        android:background="@android:drawable/editbox_background_normal" />
+
+    <!-- Tombol Borrow -->
+    <Button
+        android:id="@+id/btnBorrow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Borrow"
+        android:layout_marginTop="24dp"
+        android:background="@color/purple_700"
+        android:textColor="@android:color/white"
+        android:padding="12dp"
+        android:textSize="16sp" />
+</LinearLayout>
