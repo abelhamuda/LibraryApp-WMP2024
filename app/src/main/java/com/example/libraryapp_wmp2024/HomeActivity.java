@@ -85,7 +85,6 @@ public class HomeActivity extends AppCompatActivity {
                     String genre = cursor.getString(cursor.getColumnIndexOrThrow("genre"));
                     String barcode = cursor.getString(cursor.getColumnIndexOrThrow("barcode"));
                     String coverImagePath = cursor.getString(cursor.getColumnIndexOrThrow("cover_image"));
-
                     bookList.add(new Book(title, author, genre, barcode, coverImagePath));
                 } while (cursor.moveToNext());
             }
@@ -101,10 +100,20 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             emptyListMessage.setVisibility(View.GONE);
             bookListView.setVisibility(View.VISIBLE);
-
             adapter = new BookAdapter(this, bookList);
             bookListView.setAdapter(adapter);
         }
+
+        // Tambahkan listener klik pada ListView
+        bookListView.setOnItemClickListener((parent, view, position, id) -> {
+            Book selectedBook = bookList.get(position);
+            Intent intent = new Intent(HomeActivity.this, BookDetailsActivity.class);
+            intent.putExtra("title", selectedBook.getTitle());
+            intent.putExtra("author", selectedBook.getAuthor());
+            intent.putExtra("genre", selectedBook.getGenre());
+            intent.putExtra("barcode", selectedBook.getBarcode());
+            startActivity(intent);
+        });
 
         btnScanBook.setOnClickListener(v -> {
             ScanOptions options = new ScanOptions();
@@ -116,3 +125,4 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 }
+

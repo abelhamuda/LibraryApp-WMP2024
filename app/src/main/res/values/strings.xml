@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LibraryApp-WMP2024</string>
+    <string name="book_cover">Book Cover</string>
+    <string name="back_button">Kembali</string>
 </resources>

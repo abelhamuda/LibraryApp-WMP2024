@@ -1,13 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp">
 
-    <TextView android:id="@+id/tvTitle" android:layout_width="match_parent" android:layout_height="wrap_content" />
-    <TextView android:id="@+id/tvAuthor" android:layout_width="match_parent" android:layout_height="wrap_content" />
-    <TextView android:id="@+id/tvGenre" android:layout_width="match_parent" android:layout_height="wrap_content" />
-    <TextView android:id="@+id/tvBarcode" android:layout_width="match_parent" android:layout_height="wrap_content" />
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Back Button (tanpa Toolbar) -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/toolbar_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:contentDescription="@string/back_button"
+            android:layout_gravity="start" />
+
+        <!-- Gambar Sampul Buku -->
+        <ImageView
+            android:id="@+id/ivBookCover"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/book_cover"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Judul Buku -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="8dp"
+            android:text="Judul Buku" />
+
+        <!-- Pengarang Buku -->
+        <TextView
+            android:id="@+id/tvAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#555555"
+            android:gravity="center"
+            android:layout_marginBottom="8dp"
+            android:text="Pengarang Buku" />
+
+        <!-- Genre Buku -->
+        <TextView
+            android:id="@+id/tvGenre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#777777"
+            android:gravity="center"
+            android:layout_marginBottom="8dp"
+            android:text="Genre Buku" />
+
+        <!-- Barcode Buku -->
+        <TextView
+            android:id="@+id/tvBarcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#777777"
+            android:gravity="center"
+            android:layout_marginBottom="8dp"
+            android:text="Kode Barcode" />
+
+        <!-- Tombol Pinjam Buku -->
+        <Button
+            android:id="@+id/btnBorrowBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Pinjam Buku"
+            android:backgroundTint="#6200EE"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+</ScrollView>
